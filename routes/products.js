@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const productsModel = require("../models/products");
-// const productsModel = require(COMPLETE_O_CAMINHO); TODO
+const middleware = require('../middleware/products');
+
 
 // GET - /products
 router.get("/", function (req, res) {
   const productsData = productsModel.getProducts();
-
   res.render("products", {
     title: "Pagina de produtos",
     productsData: productsData,
@@ -14,8 +14,7 @@ router.get("/", function (req, res) {
 });
 
 // POST - /products
-
-router.post("/", function (req, res) {
+router.post("/", middleware.validateData, function (req, res) {
   const newProduct = req.body;
 
   productsModel.insertProduct(newProduct);
