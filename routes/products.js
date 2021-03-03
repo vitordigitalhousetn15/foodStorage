@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const productsModel = require("../models/products");
-// const productsModel = require(COMPLETE_O_CAMINHO); TODO
+const middleware = require("../middlewares/products");
 
 // GET - /products
 router.get("/", function (req, res) {
@@ -13,9 +13,7 @@ router.get("/", function (req, res) {
   });
 });
 
-// POST - /products
-
-router.post("/", function (req, res) {
+router.post("/", middleware.log, middleware.validateBody, function (req, res) {
   const newProduct = req.body;
 
   productsModel.insertProduct(newProduct);
