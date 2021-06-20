@@ -23,4 +23,9 @@ router.post("/", middleware.validateCredentials, function (req, res) {
   res.redirect("/products");
 });
 
+router.get("/logout", function (req, res) {
+  req.session.destroy();
+  res.redirect("/");
+});
+
 module.exports = router;
